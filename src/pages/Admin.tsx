@@ -28,6 +28,9 @@ interface Store {
   logo_url: string;
   orden: number;
   activo: boolean;
+  direccion: string;
+  horarios: string;
+  venta_mayor: string;
 }
 
 interface SiteSetting {
@@ -160,6 +163,9 @@ export default function Admin({ onNavigate }: AdminProps) {
             logo_url: store.logo_url,
             orden: store.orden,
             activo: store.activo,
+            direccion: store.direccion,
+            horarios: store.horarios,
+            venta_mayor: store.venta_mayor,
             updated_at: new Date().toISOString(),
           })
           .eq('id', store.id);
@@ -174,6 +180,9 @@ export default function Admin({ onNavigate }: AdminProps) {
           logo_url: store.logo_url || '',
           orden: store.orden || stores.length,
           activo: store.activo !== false,
+          direccion: store.direccion || '',
+          horarios: store.horarios || '',
+          venta_mayor: store.venta_mayor || '',
         });
         if (error) {
           console.error('Error inserting store:', error);
@@ -1058,7 +1067,7 @@ interface StoreFormProps {
 
 function StoreForm({ store, onSave, onCancel, saving, siteSettings }: StoreFormProps) {
   const [formData, setFormData] = useState<Partial<Store>>(
-    store || { nombre: '', url: '', logo_url: '', orden: 0, activo: true }
+    store || { nombre: '', url: '', logo_url: '', orden: 0, activo: true, direccion: '', horarios: '', venta_mayor: '' }
   );
 
   // Get site settings for preview
@@ -1102,6 +1111,36 @@ function StoreForm({ store, onSave, onCancel, saving, siteSettings }: StoreFormP
               required
               className="w-full px-4 py-2 bg-slate-950/40 border border-slate-700 rounded-lg text-slate-100"
               placeholder="https://tienda.com"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-slate-200 mb-2">Dirección</label>
+            <input
+              type="text"
+              value={formData.direccion}
+              onChange={(e) => setFormData({ ...formData, direccion: e.target.value })}
+              className="w-full px-4 py-2 bg-slate-950/40 border border-slate-700 rounded-lg text-slate-100"
+              placeholder="Av. Principal 123, Ciudad"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-slate-200 mb-2">Horarios</label>
+            <textarea
+              value={formData.horarios}
+              onChange={(e) => setFormData({ ...formData, horarios: e.target.value })}
+              className="w-full px-4 py-2 bg-slate-950/40 border border-slate-700 rounded-lg text-slate-100"
+              placeholder="Lunes a Sábado: 8:00 - 20:00&#10;Domingo: 9:00 - 14:00"
+              rows={3}
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-slate-200 mb-2">Venta al Mayor</label>
+            <textarea
+              value={formData.venta_mayor}
+              onChange={(e) => setFormData({ ...formData, venta_mayor: e.target.value })}
+              className="w-full px-4 py-2 bg-slate-950/40 border border-slate-700 rounded-lg text-slate-100"
+              placeholder="Descripcion de venta al por mayor..."
+              rows={2}
             />
           </div>
           <div>

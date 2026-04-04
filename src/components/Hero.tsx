@@ -2,41 +2,35 @@ interface HeroProps {
   backgroundImageUrl?: string;
 }
 
+const DEFAULT_BACKGROUND = '/laali.jpeg';
+
 export default function Hero({ backgroundImageUrl }: HeroProps) {
+  const bgImage = backgroundImageUrl || DEFAULT_BACKGROUND;
+
   return (
     <section className="px-3 md:px-6 pt-4 md:pt-6">
-      <div
-        className="relative mx-auto max-w-6xl overflow-hidden rounded-xl md:rounded-2xl shadow-xl md:shadow-2xl ring-1 ring-white/10"
-        style={
-          backgroundImageUrl
-            ? {
-                backgroundImage: `url(${backgroundImageUrl})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-              }
-            : undefined
-        }
-      >
-        {!backgroundImageUrl && (
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-950 to-slate-900" />
-        )}
-
-        <div className="absolute inset-0 bg-black/60" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/30" />
-
-        <div className="relative z-10 flex min-h-[12rem] md:min-h-[14rem] lg:min-h-[18rem] items-center justify-center px-4 md:px-6 py-8 md:py-10">
-          <div className="text-center">
-            <div className="text-yellow-400 font-extrabold tracking-[0.15em] md:tracking-[0.22em] text-3xl md:text-5xl lg:text-6xl drop-shadow-[0_2px_16px_rgba(0,0,0,0.55)]">
+      <div className="relative group overflow-hidden rounded-xl shadow-2xl border border-yellow-400/20 h-40 md:h-56 lg:h-72">
+        <img
+          src={bgImage}
+          alt="La Alianza"
+          className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+        />
+        
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+        
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
+          <div className="text-center px-6 py-4">
+            <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-500 tracking-wider drop-shadow-lg mb-2">
               LA ALIANZA
-            </div>
-            <div className="mt-2 md:mt-3 text-white/90 tracking-[0.3em] md:tracking-[0.55em] text-xs md:text-sm lg:text-base drop-shadow-[0_2px_14px_rgba(0,0,0,0.6)]">
-              CARNICERIAS
-            </div>
-            <div className="mt-3 md:mt-4 mx-auto h-0.5 md:h-1 w-24 md:w-36 rounded-full bg-yellow-400/90" />
+            </h1>
+            <p className="text-sm md:text-xl lg:text-2xl font-medium text-white/90 tracking-[0.3em] drop-shadow-md">
+              CARNICERÍAS
+            </p>
+            <div className="w-16 md:w-24 h-0.5 bg-gradient-to-r from-transparent via-yellow-400 to-transparent mx-auto mt-3" />
           </div>
         </div>
 
-        <div className="absolute bottom-0 left-0 right-0 h-0.5 md:h-1 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-400" />
+        <div className="absolute inset-x-0 bottom-0 h-full bg-gradient-to-r from-yellow-400/20 to-transparent opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
       </div>
     </section>
   );
